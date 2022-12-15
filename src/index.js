@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Provider } from 'react-redux';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import authReducer from './redux/authReducer';
+import logger from 'redux-logger';
+
+const store = createStore( authReducer, applyMiddleware( logger ) );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <Provider store={ store }>
+      <BrowserRouter>
+            <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
