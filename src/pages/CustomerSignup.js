@@ -1,10 +1,10 @@
-import { ErrorResponse } from "@remix-run/router";
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import Input from "../components/Input";
 import ButtonWithProgress from "../components/ButtonWithProgress";
-import { connect, useDispatch } from "react-redux";
-import apiCalls from "../services/customerService"
+import { useDispatch } from "react-redux";
+import customerService from "../services/customerService";
+import * as apiCalls from '../api/apiCalls';
 
 
 const CustomerSignup = () => {
@@ -87,21 +87,23 @@ const CustomerSignup = () => {
         const customer = {
             username: username,
             password:password,
-            name: firstName,
-            surname: lastName,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
         };
         setPendingApiCall( true );
 
-        apiCalls.signup( customer )
+        customerService.signup( customer )
             .then( ( response ) => {
+                
                 const body = {
                     username: username,
                     password: password
                 };
-        
+
                 setPendingApiCall( true );
         
+
                 apiCalls.login( body )
                     .then( ( response ) => {
                         const action = {
@@ -112,11 +114,10 @@ const CustomerSignup = () => {
                         };
                         myDispatch( action );
                         setPendingApiCall( false );
-                        navigate( '/' ); 
+                        navigate( `/ ${ action.payload.username }` ); 
                     })
                     .catch( ( error ) => {
-                        if( error.response ){
-                            // setApiError( error.response.data.message );
+                        if( error && error.response ){
                             setPendingApiCall( false );
                         }
                     });
@@ -210,4 +211,4 @@ const CustomerSignup = () => {
 
 };
 
-export default connect()( CustomerSignup );
+export default CustomerSignup;

@@ -5,20 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Provider } from 'react-redux';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import authReducer from './redux/authReducer';
 import logger from 'redux-logger';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
+const queryClient = new QueryClient();
 const store = createStore( authReducer, applyMiddleware( logger ) );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <Provider store={ store }>
+    <QueryClientProvider client={ queryClient }>
       <BrowserRouter>
             <App />
+            <ReactQueryDevtools initialIsOpen />
       </BrowserRouter>
+    </QueryClientProvider>
     </Provider>
   </React.StrictMode>
 );

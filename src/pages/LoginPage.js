@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useNavigate } from 'react-router-dom';
 import * as apiCalls from '../api/apiCalls';
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 
@@ -56,7 +56,7 @@ export const LoginPage = () => {
                 };
                 myDispatch( action );
                 setPendingApiCall( false );
-                navigate( '/' ); 
+                navigate( `/ ${ action.payload.username }` ); 
             })
             .catch( ( error ) => {
                 if( error.response ){
