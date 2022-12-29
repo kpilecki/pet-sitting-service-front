@@ -22,6 +22,7 @@ const PetInput = ( props ) => {
     const { t } = useTranslation();
 
     const petTypes = [ "DOG", "CAT", "RABBIT", "GUINEA_PIG", "FERRET", "BIRD", "REPTILE", "FARM_ANIMAL", "HORSE" ];
+    const petSizes = [ "EXTRA_SMALL", "SMALL", "MEDIUM", "LARGE", "GIANT" ];
 
     const onNameChange = ( event ) => {
         setName( event.target.value );
@@ -66,6 +67,7 @@ const PetInput = ( props ) => {
       event.preventDefault();
       props.onCancelCallback();
     };
+
     return(
         <section className="m-2">
             <header>
@@ -74,21 +76,21 @@ const PetInput = ( props ) => {
             <main className="d-flex flex-column gap-2">
                 <hr/>
                 <Input
-                    label="*Pet name"
-                    placeholder="Pet name"
+                    label={ t( "petInput.petNameInputLabel" ) }
+                    placeholder={ t( "petInput.petNameInputPlaceholder" ) }
                     value={ name }
                     onChange={ onNameChange }
                     hasError={ props.errors.name && true }
                     error={ props.errors.name }
                 />
                 <div>
-                    <span>*Species</span>
+                    <span>{ t( "petInput.species" ) }</span>
                     <select
                         className={ "form-select".concat( props.errors.species ? " is-invalid" : " is-valid" )}
-                        defaultValue={ props.pet.species || "Select species" }
+                        defaultValue={ props.pet.species || t( "petInput.selectSpecies" ) }
                         onChange={ ( event ) => setSpecies( event.target.value )}
                     >
-                        <option value="">Select species</option>
+                        <option value="">{ t( "petInput.selectSpecies" ) }</option>
                         { petTypes.map( ( type ) => {
                             return (
                                 <option
@@ -104,41 +106,45 @@ const PetInput = ( props ) => {
                     )}
                 </div>
                 <Input
-                    label="Breed"
-                    placeholder="Pet breed"
+                    label={ t( "petInput.breedInputLabel" ) }
+                    placeholder={ t( "petInput.breedInputPlaceholder" ) }
                     value={ breed }
                     onChange={ onBreedChange }
                     hasError={ props.errors.breed && true }
                     error={ props.errors.breed }
                 />
                 <div>
-                    <span>*Pet size</span>
+                    <span>{ t( "petInput.petSize" ) }</span>
                     <select
                         className={ "form-select".concat( props.errors.size ? " is-invalid" : " is-valid" )}
-                        defaultValue={ props.pet.size || "Select size" }
+                        defaultValue={ props.pet.size || t( "petInput.selectPetSize" ) }
                         onChange={ ( event ) => setSize( event.target.value ) }
                     >
-                        <option value="">Select Size</option>
-                        <option value="EXTRA_SMALL">Extra Small</option>
-                        <option value="SMALL">Small</option>
-                        <option value="MEDIUM">Medium</option>
-                        <option value="LARGE">Large</option>
-                        <option value="GIANT">Giant</option>
+                        <option value="">{ t( "petInput.selectPetSize" ) }</option>
+                        { petSizes.map( ( size ) => {
+                            return (
+                                <option
+                                    key={ size }
+                                    value={ size }
+                                >{ t( "petSize.".concat( size ) ) }
+                                </option>
+                            );
+                        })}
                     </select>
                     { props.errors.size && (
                         <span className="invalid-feedback">{ props.errors.size }</span>
                     )}
                 </div>
                 <div>
-                    <span>*Pet Gender</span>
+                    <span>{ t( "petInput.petGender" ) }</span>
                     <select
                         className={ "form-select".concat( props.errors.gender ? " is-invalid" : " is-valid" )}
-                        defaultValue={ props.pet.gender || "Select gender" }
+                        defaultValue={ props.pet.gender || t( "petInput.selectPetGender" ) }
                         onChange={ ( event ) => setGender( event.target.value ) }
                     >
-                        <option value="">Select Gender</option>
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
+                        <option value="">{ t( "petInput.selectPetGender" ) }</option>
+                        <option value="MALE">{ t( "petGender.MALE" ) }</option>
+                        <option value="FEMALE">{ t( "petGender.FEMALE" ) }</option>
                     </select>
                     { props.errors.gender && (
                         <span className="invalid-feedback">{ props.errors.gender }</span>
@@ -146,8 +152,8 @@ const PetInput = ( props ) => {
                 </div>
                 <Input
                     type="number"
-                    label="*Birth Year"
-                    placeholder="Pet birth year"
+                    label={ t( "petInput.petBirthYearInputLabel" ) }
+                    placeholder={ t( "petInput.petBirthYearInputPlaceholder" ) }
                     value={ birthYear }
                     onChange={ onBirthYearChange }
                     hasError={ props.errors.birthYear && true }
@@ -155,63 +161,63 @@ const PetInput = ( props ) => {
                 />
                 <div className="d-flex flex-wrap gap-2 justify-content-around">
                     <YesNoCheckbox
-                        headerText="Is neutered?"
+                        headerText={ t( "petInput.isNeutered" ) }
                         onButtonClick={ setNeutered }
                         value={ neutered }
                         defaultValue={ props.pet.neutered }
                         id="neutered"
                     />
                     <YesNoCheckbox
-                        headerText="Is chipped?"
+                        headerText={ t( "petInput.isChipped" ) }
                         onButtonClick={ setChipped }
                         value={ chipped }
                         defaultValue={ props.pet.chipped }
                         id="chipped"
                     />
                     <YesNoCheckbox
-                        headerText="Is vaccinated?"
+                        headerText={ t( "petInput.isVaccinated" ) }
                         onButtonClick={ setVaccinated }
                         value={ vaccinated }
                         defaultValue={ props.pet.vaccinated }
                         id="vaccinated"
                     />
                     <YesNoCheckbox
-                        headerText="Is house trained?"
+                        headerText={ t( "petInput.isHouseTrained" ) }
                         onButtonClick={ setHouseTrained }
                         value={ houseTrained }
                         defaultValue={ props.pet.houseTrained }
                         id="houseTrained"
                     />
                     <YesNoCheckbox
-                        headerText="Is friendly with dogs?"
+                        headerText={ t( "petInput.isFriendlyWithDogs" ) }
                         onButtonClick={ setFriendlyWithDogs }
                         value={ friendlyWithDogs }
                         defaultValue={ props.pet.friendlyWithDogs }
                         id="friendlyWithDogs"
                     />
                     <YesNoCheckbox
-                        headerText="Is friendly with cats?"
+                        headerText={ t( "petInput.isFriendlyWithCats" ) }
                         onButtonClick={ setFriendlyWithCats }
                         value={ friendlyWithCats }
                         defaultValue={ props.pet.friendlyWithCats }
                         id="friendlyWithCats"
                     />
                     <YesNoCheckbox
-                        headerText="Is friendly with kids?"
+                        headerText={ t( "petInput.isFriendlyWithKids" ) }
                         onButtonClick={ setFriendlyWithKids }
                         value={ friendlyWithKids }
                         defaultValue={ props.pet.friendlyWithKids }
                         id="friendlyWithKids"
                     />
                     <YesNoCheckbox
-                        headerText="Is friendly with adults?"
+                        headerText={ t( "petInput.isFriendlyWithAdults" ) }
                         onButtonClick={ setFriendlyWithAdults }
                         value={ friendlyWithAdults }
                         defaultValue={ props.pet.friendlyWithAdults }
                         id="friendlyWithAdults"
                     />
                 </div>
-                <label htmlFor="description">Tell us more about your pet</label>
+                <label htmlFor="description">{ t( "petInput.descriptionLabel" ) }</label>
                 <textarea
                     className={ "form-control".concat( props.errors.description ? " is-invalid" : " is-valid" )}
                     id="description"
@@ -226,12 +232,11 @@ const PetInput = ( props ) => {
                 <hr/>
             </main>
             <footer className="d-flex justify-content-center gap-2">
-                <button className="btn btn-warning" onClick={ onSave }>Save</button>
-                <button className="btn btn-danger" onClick={ onCancel }>Cancel</button>
+                <button className="btn btn-warning" onClick={ onSave }>{ t( "petInput.saveButton" ) }</button>
+                <button className="btn btn-danger" onClick={ onCancel }>{ t( "petInput.cancelButton" ) }</button>
             </footer>
         </section>
     )
-
 };
 
 PetInput.defaultProps = {

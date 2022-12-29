@@ -3,13 +3,14 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import {createUpdateCustomerAddress, getCustomerAddress} from "../../api/customerApi";
 import AddressUpdateForm from "../AddressUpdateForm";
 import Input from "../Input";
+import {useTranslation} from "react-i18next";
 
 const AddressView = () => {
     const [ errors, setErrors ] = useState( {} );
     const [ updateBtnText, setUpdateBtnText ] =useState( "Update" );
     const [ isUpdateFormHidden, setIsUpdateFormHidden ] = useState( true );
     const queryClient = useQueryClient();
-    let result;
+    const { t } = useTranslation();
 
     const { isLoading, isError, error, data : address } = useQuery( 'customerAddress', getCustomerAddress
     );
@@ -22,9 +23,7 @@ const AddressView = () => {
             setErrors( {} );
         },
         onError: err => {
-            console.log( err );
             setErrors( err.response.data.validationErrors );
-            console.log( errors );
         }
     });
 
@@ -39,19 +38,18 @@ const AddressView = () => {
     }
 
     if( isLoading ) {
-        result = (
-            <h3 className="text-center bg-light text-danger">Loading...</h3>
+        return (
+            <h3 className="text-center bg-light text-danger">{ t( "addressView.loading" ) }</h3>
         );
     } else if ( isError ){
-        result = (
-            <h3 className="text-center bg-light text-danger">Error has occurred</h3>
+        return (
+            <h3 className="text-center bg-light text-danger">{ t( "addressView.error" ) }</h3>
         );
     } else {
-
         if( address ){
-            result = (
+            return (
                 <section className="container bg-light rounded">
-                    <h5>Main Address</h5>
+                    <h5>{ t( "addressView.addressHeader" ) }</h5>
                     <ul>
                         <li>{ address.street }</li>
                         <li>{ address.city }</li>
@@ -72,9 +70,9 @@ const AddressView = () => {
                 </section>
             );
         } else {
-            result = (
+            return (
               <section className="container bg-light rounded">
-                  <h5 className="text-center text-warning">Please Add you address</h5>
+                  <h5 className="text-center text-warning">{ t( "addressView.addAddressHeader" ) }</h5>
                   <AddressUpdateForm
                       btnText="Add address"
                       onSubmit={ addUpdateAddress }
@@ -83,12 +81,7 @@ const AddressView = () => {
               </section>
             );
         }
-
-
-
     }
-
-    return ( result );
 };
 
 export default AddressView;
