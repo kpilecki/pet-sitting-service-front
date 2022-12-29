@@ -4,6 +4,7 @@ import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useNavigate } from 'react-router-dom';
 import * as apiCalls from '../api/apiCalls';
 import { useDispatch } from "react-redux";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -15,6 +16,7 @@ export const LoginPage = () => {
     const [ pendingApiCall, setPendingApiCall ] = useState( false );
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { t } = useTranslation();
     let disableSubmit = false;
 
     const myDispatch = ( action ) => {
@@ -56,11 +58,18 @@ export const LoginPage = () => {
                 };
                 myDispatch( action );
                 setPendingApiCall( false );
-                navigate( `/ ${ action.payload.username }` ); 
+
+                if( response.data.roles.includes( 'ROLE_SERVICE_PROVIDER' ) ){
+                    navigate( '/provider/home' );
+                } else {
+                    navigate( `/ ${ action.payload.username }` );
+                }
+
             })
             .catch( ( error ) => {
+                console.log( error );
                 if( error.response ){
-                    setApiError( error.response.data.message );
+                    setApiError( error.response.data );
                     setPendingApiCall( false );
                 }
             });
@@ -71,16 +80,16 @@ export const LoginPage = () => {
                 <h1 className="text-center">Login</h1>
                 <div className="col-12 mb-3">
                     <Input
-                        label="Username" 
-                        placeholder="Your username" 
+                        label={ t( "loginPage.username" ) }
+                        placeholder={ t( "loginPage.usernamePlaceholder" ) }
                         value={ username }
                         onChange={ onChangeUsername }
                     />
                 </div>
                 <div className="col-12 mb-3">
                     <Input
-                        label="Password" 
-                        placeholder="Your password" 
+                        label={ t( "loginPage.password" ) }
+                        placeholder={ t( "loginPage.passwordPlaceholder" ) }
                         type="password"
                         value={ password }
                         onChange={ onChangePassword } 
@@ -95,14 +104,12 @@ export const LoginPage = () => {
                     <ButtonWithProgress
                         onClick={ onClickLogin }
                         disabled={ disableSubmit || pendingApiCall }
-                        text="Login"
+                        text={ t( "loginPage.loginButton" ) }
                         pendingApiCall={ pendingApiCall }
                     />
                 </div>
             </div>
-
         );
     }
-
 
 export default LoginPage;

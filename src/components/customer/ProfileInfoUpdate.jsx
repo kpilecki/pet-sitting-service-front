@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getCustomer, updateCustomer} from "../../api/customerApi";
 import UpdateInput from "../UpdateInput";
+import {useTranslation} from "react-i18next";
 
 const ProfileInfoUpdate = () => {
     const [ errors, setErrors ] = useState( {} );
     const queryClient = useQueryClient();
-    let customerProfileForm;
+    const { t } = useTranslation();
 
     const { isLoading, isError, error, data : customer } = useQuery( 'customer', getCustomer
      );
@@ -16,20 +17,18 @@ const ProfileInfoUpdate = () => {
             queryClient.invalidateQueries( 'customer' );
         },
         onError: err => {
-            console.log( err );
             setErrors( err.response.data.validationErrors );
-            console.log( errors );
         }
     })
 
     if( isLoading ){
-        customerProfileForm = (
-            <h3>Loading...</h3>
+        return (
+            <h3>{ t( "profileInfoUpdate.loading" ) }</h3>
         );
     } else if( isError ){
         console.log( error );
-        customerProfileForm = (
-            <h3>Sorry, unexpected error has occurred</h3>
+        return (
+            <h3>{ t( "profileInfoUpdate.error" ) }</h3>
         );
     } else {
 
@@ -57,50 +56,48 @@ const ProfileInfoUpdate = () => {
             });
         };
 
-        customerProfileForm = (
+        return (
             <div className="container bg-light rounded">
-                <h1 className="text-center">Update Your Profile</h1>
+                <h1 className="text-center">{ t( "profileInfoUpdate.updateYourProfile" ) }</h1>
                 <UpdateInput
-                    inputLabel="Enter new username"
-                    inputPlaceholder="Username"
+                    inputLabel={ t( "profileInfoUpdate.usernameInputLabel" ) }
+                    inputPlaceholder={ t( "profileInfoUpdate.usernameInputPlaceholder" ) }
                     inputHasError={ errors.username && true }
                     inputError={ updateCustomerMutation.error && updateCustomerMutation.error.username }
-                    headerText= { `Username: ${ customer.username }` }
-                    buttonValue= "Update Username"
+                    headerText= { t( "profileInfoUpdate.usernameInputHeaderText" ).concat( customer.username ) }
+                    buttonValue={ t( "profileInfoUpdate.usernameInputButtonValue" ) }
                     updateMutator={ updateUsername }
                 />
                 <UpdateInput
-                    inputLabel="Enter new name"
-                    inputPlaceholder="Name"
+                    inputLabel={ t( "profileInfoUpdate.firstNameInputLabel" ) }
+                    inputPlaceholder={ t( "profileInfoUpdate.firstNameInputPlaceholder" ) }
                     inputHasError={ updateCustomerMutation.error && updateCustomerMutation.error.firstName && true }
                     inputError={ updateCustomerMutation.error && updateCustomerMutation.error.firstName }
-                    headerText= { `First Name: ${ customer.firstName }` }
-                    buttonValue= "Update Name"
+                    headerText= { t( "profileInfoUpdate.firstNameInputHeaderText" ).concat( customer.firstName ) }
+                    buttonValue={ t( "profileInfoUpdate.firstNameInputButtonValue" ) }
                     updateMutator={ updateFirstName }
                 />
                 <UpdateInput
-                    inputLabel="Enter new surname"
-                    inputPlaceholder="Surname"
+                    inputLabel={ t( "profileInfoUpdate.surnameInputLabel" ) }
+                    inputPlaceholder={ t( "profileInfoUpdate.surnameInputPlaceholder" ) }
                     inputHasError={ updateCustomerMutation.error && updateCustomerMutation.error.lastName && true }
                     inputError={ updateCustomerMutation.error && updateCustomerMutation.error.lastName }
-                    headerText= { `Surname: ${ customer.lastName }` }
-                    buttonValue= "Update Surname"
+                    headerText= { t( "profileInfoUpdate.surnameInputHeaderText" ).concat( customer.lastName ) }
+                    buttonValue={ t( "profileInfoUpdate.surnameInputButtonValue" ) }
                     updateMutator={ updateLastName }
                 />
                 <UpdateInput
-                    inputLabel="Enter new email"
-                    inputPlaceholder="Email"
+                    inputLabel={ t( "profileInfoUpdate.emailInputLabel" ) }
+                    inputPlaceholder={ t( "profileInfoUpdate.emailInputPlaceholder" ) }
                     inputHasError={ errors.email && true }
                     inputError={ errors.email }
-                    headerText= { `Email: ${ customer.email }` }
-                    buttonValue= "Update Email"
+                    headerText= { t( "profileInfoUpdate.emailInputHeaderText" ).concat( customer.email ) }
+                    buttonValue= { t("profileInfoUpdate.emailInputButtonValue" ) }
                     updateMutator={ updateEmail }
                 />
             </div>
         );
     }
-
-    return (  customerProfileForm  );
 };
 
 export default ProfileInfoUpdate;

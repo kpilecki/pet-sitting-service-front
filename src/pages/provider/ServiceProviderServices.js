@@ -1,5 +1,4 @@
 import React from "react";
-import ServiceProviderAbout from "../../components/provider/ServiceProviderAbout";
 import ProviderSideMenu from "../../components/provider/ProviderSideMenu";
 import ProviderServicesList from "../../components/provider/ProviderServicesList";
 

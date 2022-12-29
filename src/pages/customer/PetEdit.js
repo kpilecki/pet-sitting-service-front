@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import ProfileInfo from "../../components/customer/ProfileInfo";
-import Pets from "../../components/customer/Pets";
 import SecondaryMenu from "../../components/SecondaryMenu";
 import {useNavigate, useParams} from "react-router-dom";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getPetImage, getPets, savePet, savePetImage, updatePet} from "../../api/petApi";
 import PetInput from "../../components/customer/PetInput";
 import ImageUpload from "../../components/ImageUpload";
+import {useTranslation} from "react-i18next";
 
 const PetEdit = () => {
     const params = useParams();
@@ -14,13 +14,13 @@ const PetEdit = () => {
     const queryClient = useQueryClient();
     const { isLoading, isError, error, data } = useQuery( 'pets', getPets );
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { isLoading: imageIsLoading, isError: imageIsError, error: imageError, data: imageData } = useQuery( 'petImage', () => getPetImage( params.id )  );
 
     const updateImageMutation = useMutation( savePetImage, {
         onSuccess: () => {
             queryClient.invalidateQueries( 'petImage' );
-            console.log( "Image saved" );
         },
         onError: ( error ) => {
             setErrors( error.response.data.message )
@@ -47,12 +47,12 @@ const PetEdit = () => {
 
     if( isLoading ) {
         return (
-            <h4 className="text-center text-warning">Loading...</h4>
+            <h4 className="text-center text-warning">{ t( "petEdit.loading" ) }</h4>
         );
 
     } else if( isError ) {
         return (
-            <h4 className="text-center text-danger">Sorry, unexpected error has occurred</h4>
+            <h4 className="text-center text-danger">{ t( "petEdit.error" ) }</h4>
         );
     } else {
         const pet = data.pets.find(  ({ id })  => id.toString() === params.id );
@@ -69,7 +69,7 @@ const PetEdit = () => {
                         onUpload ={ onImageUpload }
                     />
                     <PetInput
-                        headerText="Edit your pet"
+                        headerText={ t( "petEdit.petInputHeader" ) }
                         pet={ pet }
                         errors={ errors }
                         onSaveCallback={ updatePetMutator }

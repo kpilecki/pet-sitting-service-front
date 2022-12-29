@@ -12,6 +12,7 @@ import authReducer from './redux/authReducer';
 import logger from 'redux-logger';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import './i18n/config';
 
 const queryClient = new QueryClient();
 const store = createStore( authReducer, applyMiddleware( logger ) );

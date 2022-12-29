@@ -14,6 +14,9 @@ import CustomerOrders from "./pages/customer/CustomerOrders";
 import ServiceProviderProfile from "./pages/provider/ServiceProviderProfile";
 import PetEdit from "./pages/customer/PetEdit";
 import ServiceProviderServices from "./pages/provider/ServiceProviderServices";
+import ServiceEdit from "./pages/provider/ServiceEdit";
+import ServiceProviderFind from "./pages/provider/ServiceProviderFind";
+import ServiceProviderView from "./pages/provider/ServiceProviderView";
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
             <Route path='/provider/profile' element={ <ServiceProviderProfile /> } />
             <Route path='/customer/pets/:id' element={ <PetEdit /> } />
             <Route path='/provider/services' element={ <ServiceProviderServices /> } />
+            <Route path='/provider/services/:id' element={ <ServiceEdit /> } />
+            <Route path='/provider/find' element={ <ServiceProviderFind /> } />
+            <Route path='/provider/view/:id' element={ <ServiceProviderView /> } />
         </Routes>
       </div>
     </div>

@@ -5,6 +5,7 @@ import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useDispatch } from "react-redux";
 import customerService from "../services/customerService";
 import * as apiCalls from '../api/apiCalls';
+import {useTranslation} from "react-i18next";
 
 
 const CustomerSignup = () => {
@@ -19,6 +20,7 @@ const CustomerSignup = () => {
     const [ passwordRepeatConfirmed, setPasswordRepeatConfirmed ] = useState( true );
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const onChangeUsername = ( event ) => {
         setUsername( event.target.value );
@@ -123,6 +125,7 @@ const CustomerSignup = () => {
                     });
             })
             .catch( ( apiError ) => {
+                console.log( apiError );
                 let tempErrors = { ...errors };
                 setPendingApiCall( false );
                 if( apiError.response.data && apiError.response.data.validationErrors ){
@@ -138,8 +141,8 @@ const CustomerSignup = () => {
             <h1 className="text-center">Sign Up</h1>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Username"
-                    placeholder="Your username"
+                    label={ t( "customerSignup.username" ) }
+                    placeholder={ t( "customerSignup.usernamePlaceholder" ) }
                     value={ username }
                     onChange={ onChangeUsername }
                     hasError={ errors.username && true }
@@ -148,8 +151,8 @@ const CustomerSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Password"
-                    placeholder="Your password"
+                    label={ t( "customerSignup.password" ) }
+                    placeholder={ t( "customerSignup.passwordPlaceholder" ) }
                     type="password"
                     value={ password }
                     onChange={ onChangePassword }
@@ -159,8 +162,8 @@ const CustomerSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Password Repeat"
-                    placeholder="Repeat your password"
+                    label={ t( "customerSignup.passwordRepeat" ) }
+                    placeholder={ t( "customerSignup.passwordRepeatPlaceholder" ) }
                     type="password"
                     value={ passwordRepeat }
                     onChange={ onChangePasswordRepeat }
@@ -170,8 +173,8 @@ const CustomerSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Name"
-                    placeholder="Your name"
+                    label={ t( "customerSignup.name" ) }
+                    placeholder={ t( "customerSignup.namePlaceholder" ) }
                     value={ firstName }
                     onChange={ onChangeFirstName }
                     hasError={ errors.name && true }
@@ -180,8 +183,8 @@ const CustomerSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Surname"
-                    placeholder="Your surname"
+                    label={ t( "customerSignup.surname" ) }
+                    placeholder={ t( "customerSignup.surnamePlaceholder" ) }
                     value={ lastName }
                     onChange={ onChangeLastName }
                     hasError={ errors.surname && true }
@@ -190,8 +193,8 @@ const CustomerSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="Email"
-                    placeholder="Your email"
+                    label={ t( "customerSignup.email" ) }
+                    placeholder={ t( "customerSignup.emailPlaceholder" ) }
                     value={ email }
                     onChange={ onChangeEmail }
                     hasError={ errors.email && true }
@@ -203,7 +206,7 @@ const CustomerSignup = () => {
                     onClick={ onClickSignUp }
                     disabled={ pendingApiCall || !passwordRepeatConfirmed }
                     pendingApiCall={ pendingApiCall }
-                    text={ "Sign Up" }
+                    text={  t( "customerSignup.signupButton" ) }
                 />
             </div>
         </div>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {getPetImage} from "../../api/petApi";
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 const PetSmallView = ( props ) => {
@@ -23,10 +22,15 @@ const PetSmallView = ( props ) => {
           key={ props.pet.id }
       >
           { image && (
-              <img className="rounded mx-auto img-fluid " src={ `data:image/jpeg;base64,${ image }` } width='150' alt="pet profile picture"/>
+              <img
+                  className="rounded mx-auto img-fluid "
+                  src={ `data:image/jpeg;base64,${ image }` }
+                  width='150'
+                  alt="pet profile picture"
+              />
           )}
-          <h5> { props.pet.name }</h5>
-          <p> { props.pet.description.slice(0, 50 ) }</p>
+          <h5>{ props.pet.name }</h5>
+          <p>{ props.pet.description.slice(0, 50 ) }</p>
       </div>
     );
 };

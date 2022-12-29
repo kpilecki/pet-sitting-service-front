@@ -1,11 +1,13 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 const ProviderOrders = () => {
+    const { t } = useTranslation();
 
     return(
       <section className="bg-light rounded">
-          <h2>Pending Orders</h2>
-          <h4>Sorry you dont have any orders</h4>
+          <h2>{ t( "providerOrders.pendingOrders" ) }</h2>
+          <h4>{ t( "providerOrders.noOrders" ) }</h4>
       </section>
     );
 };

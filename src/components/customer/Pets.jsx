@@ -4,12 +4,14 @@ import { getPets, savePet } from "../../api/petApi";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetInput from "./PetInput";
 import PetSmallView from "./PetSmallView";
+import {useTranslation} from "react-i18next";
 
 const Pets = () => {
     const { isLoading, isError, error, data } = useQuery( 'pets', getPets );
     const [ errors, setErrors ] = useState( {} );
     const [ isAddNewPetHidden, setisAddNewPetHidden ] = useState( true );
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     const saveNewPetMutator = useMutation( savePet, {
         onSuccess: () => {
@@ -20,7 +22,6 @@ const Pets = () => {
         onError: ( error ) => {
             setErrors( error.response.data.validationErrors );
         }
-
     } );
 
     const onClickShow = ( event ) => {
@@ -39,19 +40,19 @@ const Pets = () => {
 
     if( isLoading ) {
         return (
-            <h4 className="text-center text-warning">Loading...</h4>
+            <h4 className="text-center text-warning">{ t( "pets.loading" ) }</h4>
         );
 
     } else if( isError ) {
         return (
-            <h4 className="text-center text-danger">Sorry, unexpected error has occurred</h4>
+            <h4 className="text-center text-danger">{ t( "pets.error" ) }</h4>
         );
     } else if( data.pets.length === 0 ){
         return (
             <section className='bg-light rounded'>
-                <h3 className="text-center">Sorry you don't have any pets</h3>
+                <h3 className="text-center">{ t( "pets.noPets" ) }</h3>
                 < PetInput
-                    headerText = "Add new Pet"
+                    headerText ={ t( "pets.petInputHeaderText" ) }
                     errors= { errors }
                     onSaveCallback = { savePetOnSave }
                     onCancelCallback = { savePetOnCancel }
@@ -63,7 +64,7 @@ const Pets = () => {
             return (
                 <section>
                     < PetInput
-                        headerText = "Add new Pet"
+                        headerText = { t( "pets.petInputHeaderText" ) }
                         errors= { errors }
                         onSaveCallback = { savePetOnSave }
                         onCancelCallback = { savePetOnCancel }
@@ -78,21 +79,19 @@ const Pets = () => {
                             return(
                                 <PetSmallView
                                     pet={ pet }
-                                    onClick={ () => {} }
                                 />
                             )
                         })}
                     </ul>
-                    <button className="btn btn-warning float-end m-2" onClick={ onClickShow }>Add new Pet</button>
+                    <button
+                        className="btn btn-warning float-end m-2"
+                        onClick={ onClickShow }
+                    >Add new Pet
+                    </button>
                 </section>
             )
         }
-
-
-
     }
-
-
 };
 
 export default Pets;

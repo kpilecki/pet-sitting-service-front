@@ -1,6 +1,8 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 const YesNoCheckbox = ( props ) => {
+    const { t } = useTranslation();
 
     return (
         <div className="d-flex flex-column align-items-center m-2">
@@ -17,7 +19,7 @@ const YesNoCheckbox = ( props ) => {
                 <label
                     className={ "border border-warning p-2 rounded-circle".concat( props.value ? " bg-warning" : "" ) }
                     htmlFor={ "yes".concat( props.id ) }
-                >Yes</label>
+                >{ t( "yesNoCheckbox.yes" ) }</label>
                 <input
                     className="form-check-input visually-hidden"
                     type="checkbox"
@@ -29,7 +31,7 @@ const YesNoCheckbox = ( props ) => {
                 <label
                     className={ "border border-warning p-2 rounded-circle".concat( !props.value ? " bg-warning" : "" ) }
                     htmlFor={ "no".concat( props.id ) }
-                >No</label>
+                >{ t( "yesNoCheckbox.no" ) }</label>
             </div>
         </div>
     );

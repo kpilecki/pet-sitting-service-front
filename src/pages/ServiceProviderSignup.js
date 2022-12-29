@@ -5,6 +5,7 @@ import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useDispatch } from "react-redux";
 import serviceProviderService from '../services/serviceProviderService';
 import * as apiCalls from '../api/apiCalls';
+import {useTranslation} from "react-i18next";
 
 
 const ServiceProviderSignup = () => {
@@ -19,6 +20,7 @@ const ServiceProviderSignup = () => {
     const [ passwordRepeatConfirmed, setPasswordRepeatConfirmed ] = useState( true );
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const onChangeUsername = ( event ) => {
         setUsername( event.target.value );
@@ -138,8 +140,8 @@ const ServiceProviderSignup = () => {
             <h1 className="text-center">Sign Up</h1>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Username"
-                    placeholder="Your username"
+                    label={ t( "serviceProviderSignup.username" ) }
+                    placeholder={ t( "serviceProviderSignup.usernamePlaceholder" ) }
                     value={ username }
                     onChange={ onChangeUsername }
                     hasError={ errors.username && true }
@@ -148,8 +150,8 @@ const ServiceProviderSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Password"
-                    placeholder="Your password"
+                    label={ t( "serviceProviderSignup.password" ) }
+                    placeholder={ t( "serviceProviderSignup.passwordPlaceholder" ) }
                     type="password"
                     value={ password }
                     onChange={ onChangePassword }
@@ -159,8 +161,8 @@ const ServiceProviderSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Password Repeat"
-                    placeholder="Repeat your password"
+                    label={ t(  "serviceProviderSignup.passwordRepeat" ) }
+                    placeholder={ t( "serviceProviderSignup.passwordRepeatPlaceholder" ) }
                     type="password"
                     value={ passwordRepeat }
                     onChange={ onChangePasswordRepeat }
@@ -170,8 +172,8 @@ const ServiceProviderSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Name"
-                    placeholder="Your name"
+                    label={ t( "serviceProviderSignup.name" ) }
+                    placeholder={ t( "serviceProviderSignup.namePlaceholder" ) }
                     value={ firstName }
                     onChange={ onChangeFirstName }
                     hasError={ errors.name && true }
@@ -180,8 +182,8 @@ const ServiceProviderSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Surname"
-                    placeholder="Your surname"
+                    label={ t( "serviceProviderSignup.surname" ) }
+                    placeholder={ t( "serviceProviderSignup.surnamePlaceholder" ) }
                     value={ lastName }
                     onChange={ onChangeLastName }
                     hasError={ errors.surname && true }
@@ -190,8 +192,8 @@ const ServiceProviderSignup = () => {
             </div>
             <div className="col-12 mb-3">
                 <Input 
-                    label="*Email"
-                    placeholder="Your email"
+                    label={ t( "serviceProviderSignup.email" ) }
+                    placeholder={ t( "serviceProviderSignup.emailPlaceholder" ) }
                     value={ email }
                     onChange={ onChangeEmail }
                     hasError={ errors.email && true }
@@ -203,7 +205,7 @@ const ServiceProviderSignup = () => {
                     onClick={ onClickSignUp }
                     disabled={ pendingApiCall || !passwordRepeatConfirmed }
                     pendingApiCall={ pendingApiCall }
-                    text={ "Sign Up" }
+                    text={ t( "serviceProviderSignup.signupButton" ) }
                 />
             </div>
         </div>

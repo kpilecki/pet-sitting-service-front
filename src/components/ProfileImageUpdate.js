@@ -12,7 +12,6 @@ const ProfileImageUpdate = () => {
     const updateImageMutation = useMutation( updateProfileImage, {
         onSuccess: () => {
             queryClient.invalidateQueries( 'customerProfileImage' );
-            console.log( "Image saved" );
         },
         onError: ( error ) => {
             setErrors( error.response.data.message )

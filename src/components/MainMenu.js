@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-
+import {useTranslation} from "react-i18next";
 
 const MainMenu = () => {
     const store = useStore();
     const dispatch = useDispatch();
     const [ isLoggedIn, setIsLoggedIn ] = useState( store.getState().isLoggedIn );
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     store.subscribe( () => {
         setIsLoggedIn( store.getState().isLoggedIn );
@@ -17,20 +17,20 @@ const MainMenu = () => {
 
     const getMenu = () => {
         return (
-            <ul className="nav navbar-nav ml-auto">
-                <li className="nav-item btn btn-outline-primary">
+            <ul className="nav navbar-nav m-1">
+                <li className="nav-item btn btn-outline-warning m-2">
                     <Link to="provider/signup" className="nav-link">
-                        Become Pet Sitter
+                        { t( "mainMenu.becomePetSitter" ) }
                     </Link>
                 </li>
-                <li className="nav-item btn">
+                <li className="nav-item btn btn-outline-warning m-2">
                     <Link to="/signup" className="nav-link">
-                        Sign Up
+                        { t( "mainMenu.signUp" ) }
                     </Link>
                 </li>
-                <li className="nav-item btn">
+                <li className="nav-item btn btn-outline-warning m-2">
                     <Link to="/login" className="nav-link">
-                        Login
+                        { t( "mainMenu.login" ) }
                     </Link>
                 </li>
             </ul>
@@ -47,37 +47,40 @@ const MainMenu = () => {
 
     const getCustomerMenu = () => {
         return(
-            <ul className="nav navbar-nav ml-auto">
-                <li className="nav-item">
+            <ul className="nav navbar-nav m-1">
+                <li className="nav-item btn btn-outline-warning m-2">
+                    <Link to={ '/provider/find' } className="nav-link">
+                        { t( "mainMenu.findPetSitters" ) }
+                    </Link>
+                </li>
+                <li className="nav-item btn btn-outline-warning m-2">
                     <Link to={`/ ${ store.getState().username }`} className="nav-link">
-                        Home
+                        { t( "mainMenu.home" ) }
                     </Link>
                 </li>
                 <li 
-                    className="nav-item nav-link" 
+                    className="nav-item nav-link btn btn-outline-danger m-2"
                     onClick={ onClickLogout }
                     style={{ cursor: 'pointer' }}
                     >
-                    Logout
+                    { t( "mainMenu.logout" ) }
                 </li>
             </ul>
         );
     };
-
 
     return (
         <div className="bg-white shadow-sm mb-2">
             <div className="container">
             <nav className="navbar navbar-light navbar-expand justify-content-between">
                 <Link to="/" className="navbar-brand">
-                    Pet Sitting Service
+                    { t( "mainMenu.petSittingService" ) }
                 </Link>
                 { isLoggedIn ? getCustomerMenu() : getMenu() }
             </nav>   
             </div>
         </div>
     );
-
 };
 
 

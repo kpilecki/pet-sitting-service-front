@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Input from "../Input";
 import YesNoCheckbox from "../YesNoCheckbox";
-import {useMutation} from "react-query";
-import * as events from "events";
+import { useTranslation } from "react-i18next";
 
 const PetInput = ( props ) => {
     const [ name, setName ] = useState( props.pet.name || "" );
@@ -20,6 +19,9 @@ const PetInput = ( props ) => {
     const [ friendlyWithKids, setFriendlyWithKids ] = useState( props.pet.friendlyWithKids || false );
     const [ friendlyWithAdults, setFriendlyWithAdults ] = useState( props.pet.friendlyWithAdults || false );
     const [ description, setDescription ] = useState( props.pet.description || "" );
+    const { t } = useTranslation();
+
+    const petTypes = [ "DOG", "CAT", "RABBIT", "GUINEA_PIG", "FERRET", "BIRD", "REPTILE", "FARM_ANIMAL", "HORSE" ];
 
     const onNameChange = ( event ) => {
         setName( event.target.value );
@@ -87,15 +89,15 @@ const PetInput = ( props ) => {
                         onChange={ ( event ) => setSpecies( event.target.value )}
                     >
                         <option value="">Select species</option>
-                        <option value="DOG">Dog</option>
-                        <option value="CAT">Cat</option>
-                        <option value="RABBIT">Rabbit</option>
-                        <option value="GUINEA_PIG">Guinea Pig</option>
-                        <option value="FERRET">Ferret</option>
-                        <option value="BIRD">Bird</option>
-                        <option value="REPTILE">Reptile</option>
-                        <option value="FARM_ANIMAL">Farm Animal</option>
-                        <option value="HORSE">Horse</option>
+                        { petTypes.map( ( type ) => {
+                            return (
+                                <option
+                                    key={ type }
+                                    value={ type }
+                                >{ t( "petType.".concat( type ) ) }
+                                </option>
+                            );
+                        })}
                     </select>
                     { props.errors.species && (
                         <span className="invalid-feedback">{ props.errors.species }</span>
