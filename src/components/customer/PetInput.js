@@ -43,6 +43,7 @@ const PetInput = ( props ) => {
     const onSave = ( event ) => {
         event.preventDefault();
         const pet = {
+                id: props.pet.id,
                 name: name,
                 species: species,
                 breed: breed,
@@ -242,6 +243,7 @@ const PetInput = ( props ) => {
 PetInput.defaultProps = {
     headerText: "",
     pet: {
+        id: "",
         name: undefined,
         species: undefined,
         breed: undefined,

@@ -17,6 +17,7 @@ import ServiceProviderServices from "./pages/provider/ServiceProviderServices";
 import ServiceEdit from "./pages/provider/ServiceEdit";
 import ServiceProviderFind from "./pages/provider/ServiceProviderFind";
 import ServiceProviderView from "./pages/provider/ServiceProviderView";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path='/provider/view/:id' element={ <ServiceProviderView /> } />
         </Routes>
       </div>
+        <Footer />
     </div>
   );
 }

@@ -38,12 +38,17 @@ const PetEdit = () => {
     const updatePetMutator = useMutation( updatePet, {
         onSuccess: () => {
             queryClient.invalidateQueries( 'pets' );
+            navigate( '/customer/pets');
             setErrors( {} );
         },
         onError: ( error ) => {
             setErrors( error.response.data.validationErrors );
         }
     } );
+
+    const onUpdate = ( pet ) => {
+        updatePetMutator.mutate( pet );
+    };
 
     if( isLoading ) {
         return (
@@ -72,7 +77,7 @@ const PetEdit = () => {
                         headerText={ t( "petEdit.petInputHeader" ) }
                         pet={ pet }
                         errors={ errors }
-                        onSaveCallback={ updatePetMutator }
+                        onSaveCallback={ onUpdate }
                         onCancelCallback={ onCancelEdit }
                     />
                 </div>

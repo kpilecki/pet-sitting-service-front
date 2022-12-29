@@ -211,5 +211,9 @@
   "addressView.loading": "Loading...",
   "addressView.error": "Error has occurred",
   "addressView.addressHeader": "Main Address",
-  "addressView.addAddressHeader": "Please Add Your address"
+  "addressView.addAddressHeader": "Please Add Your address",
+  "homePage.section1.header": "Connect with caring sitters",
+  "homePage.section1.text": "Find a verified and reviewed sitter who’ll keep your pets company and give them all the time, care and attention in the world",
+  "homePage.section2.header": "Calling all pet and travel lovers",
+  "homePage.section2.text": "Stay for free with adorable animals in unique homes around the world. Sit as often as you like, wherever you like."
 }

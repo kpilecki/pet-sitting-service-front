@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import serviceProviderService from '../services/serviceProviderService';
 import * as apiCalls from '../api/apiCalls';
 import {useTranslation} from "react-i18next";
+import {parseErrors} from "../utils/utils";
 
 
 const ServiceProviderSignup = () => {
@@ -127,12 +128,14 @@ const ServiceProviderSignup = () => {
             .catch( ( apiError ) => {
                 let tempErrors = { ...errors };
                 setPendingApiCall( false );
-                if( apiError.response.data && apiError.response.data.validationErrors ){
-                    tempErrors = { ...apiError.response.data.validationErrors };
+                if( apiError.response.data && apiError.response.data.errors ){
+                    tempErrors = parseErrors( apiError );
                 }
                 setErrors( tempErrors );
             });
     };
+
+
 
 
     return(

@@ -50,7 +50,7 @@ const AddressView = () => {
             return (
                 <section className="container bg-light rounded">
                     <h5>{ t( "addressView.addressHeader" ) }</h5>
-                    <ul>
+                    <ul className="list-unstyled">
                         <li>{ address.street }</li>
                         <li>{ address.city }</li>
                         <li>{ address.municipality }</li>

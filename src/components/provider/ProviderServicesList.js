@@ -59,7 +59,7 @@ const ProviderServicesList = () => {
                 <main className="bg-light rounded p-2">
                     { !isAddNewVisible && (
                        <>
-                           <section className="d-flex gap-2">
+                           <section className="d-flex gap-2 flex-column">
                                { data.services.map( ( service ) => {
                                    return(
                                        <ServiceSmallView

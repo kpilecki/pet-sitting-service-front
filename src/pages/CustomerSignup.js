@@ -6,14 +6,15 @@ import { useDispatch } from "react-redux";
 import customerService from "../services/customerService";
 import * as apiCalls from '../api/apiCalls';
 import {useTranslation} from "react-i18next";
+import {parseErrors} from "../utils/utils";
 
 
 const CustomerSignup = () => {
     const [ username, setUsername ] = useState( "" );
     const [password, setPassword ] = useState( "" );
     const [ passwordRepeat, setPasswordRepeat ] = useState( "" );
-    const [ firstName, setFirstName ] = useState( "" );
-    const [ lastName, setLastName ] = useState( "" );
+    // const [ firstName, setFirstName ] = useState( "" );
+    // const [ lastName, setLastName ] = useState( "" );
     const [ email, setEmail ] = useState( "" );
     const [ errors, setErrors ] = useState( {} );
     const [ pendingApiCall, setPendingApiCall ] = useState( false );
@@ -46,21 +47,21 @@ const CustomerSignup = () => {
         setErrors( tempErrors );
     };
 
-    const onChangeFirstName = ( event ) => {
-        setFirstName( event.target.value );
-
-        const tempErrors = { ...errors };
-        delete tempErrors.name;
-        setErrors( tempErrors );
-    };
-
-    const onChangeLastName = ( event ) => {
-        setLastName( event.target.value );
-
-        const tempErrors = { ...errors };
-        delete tempErrors.surname;
-        setErrors( tempErrors );
-    };
+    // const onChangeFirstName = ( event ) => {
+    //     setFirstName( event.target.value );
+    //
+    //     const tempErrors = { ...errors };
+    //     delete tempErrors.name;
+    //     setErrors( tempErrors );
+    // };
+    //
+    // const onChangeLastName = ( event ) => {
+    //     setLastName( event.target.value );
+    //
+    //     const tempErrors = { ...errors };
+    //     delete tempErrors.surname;
+    //     setErrors( tempErrors );
+    // };
 
     const onChangeEmail = ( event ) => {
         setEmail( event.target.value );
@@ -89,8 +90,8 @@ const CustomerSignup = () => {
         const customer = {
             username: username,
             password:password,
-            firstName: firstName,
-            lastName: lastName,
+            // firstName: firstName,
+            // lastName: lastName,
             email: email,
         };
         setPendingApiCall( true );
@@ -125,11 +126,10 @@ const CustomerSignup = () => {
                     });
             })
             .catch( ( apiError ) => {
-                console.log( apiError );
                 let tempErrors = { ...errors };
                 setPendingApiCall( false );
-                if( apiError.response.data && apiError.response.data.validationErrors ){
-                    tempErrors = { ...apiError.response.data.validationErrors };
+                if( apiError.response.data && apiError.response.data.errors ){
+                    tempErrors = parseErrors( apiError );
                 }
                 setErrors( tempErrors );
             });
@@ -137,7 +137,7 @@ const CustomerSignup = () => {
 
 
     return(
-        <div className="container">
+        <div className="container w-50 h-100 d-flex flex-column align-items-center">
             <h1 className="text-center">Sign Up</h1>
             <div className="col-12 mb-3">
                 <Input 
@@ -171,26 +171,26 @@ const CustomerSignup = () => {
                     error={ errors.passwordRepeat }
                 />
             </div>
-            <div className="col-12 mb-3">
-                <Input 
-                    label={ t( "customerSignup.name" ) }
-                    placeholder={ t( "customerSignup.namePlaceholder" ) }
-                    value={ firstName }
-                    onChange={ onChangeFirstName }
-                    hasError={ errors.name && true }
-                    error={ errors.name }
-                />
-            </div>
-            <div className="col-12 mb-3">
-                <Input 
-                    label={ t( "customerSignup.surname" ) }
-                    placeholder={ t( "customerSignup.surnamePlaceholder" ) }
-                    value={ lastName }
-                    onChange={ onChangeLastName }
-                    hasError={ errors.surname && true }
-                    error={ errors.surname }
-                />
-            </div>
+            {/*<div className="col-12 mb-3">*/}
+            {/*    <Input */}
+            {/*        label={ t( "customerSignup.name" ) }*/}
+            {/*        placeholder={ t( "customerSignup.namePlaceholder" ) }*/}
+            {/*        value={ firstName }*/}
+            {/*        onChange={ onChangeFirstName }*/}
+            {/*        hasError={ errors.name && true }*/}
+            {/*        error={ errors.name }*/}
+            {/*    />*/}
+            {/*</div>*/}
+            {/*<div className="col-12 mb-3">*/}
+            {/*    <Input */}
+            {/*        label={ t( "customerSignup.surname" ) }*/}
+            {/*        placeholder={ t( "customerSignup.surnamePlaceholder" ) }*/}
+            {/*        value={ lastName }*/}
+            {/*        onChange={ onChangeLastName }*/}
+            {/*        hasError={ errors.surname && true }*/}
+            {/*        error={ errors.surname }*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div className="col-12 mb-3">
                 <Input 
                     label={ t( "customerSignup.email" ) }
