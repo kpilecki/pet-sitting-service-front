@@ -5,6 +5,7 @@ import ProfileInfo from "../../components/customer/ProfileInfo";
 import SecondaryMenu from "../../components/SecondaryMenu";
 import {enumToString} from "../../utils/utils";
 import {useTranslation} from "react-i18next";
+import OrderCreate from "../../components/OrderCreate";
 
 const ServiceProviderView = () => {
     const params = useParams();
@@ -85,7 +86,7 @@ const ServiceProviderView = () => {
                                     </ul>
                                     <h6>{ t( "serviceProviderView.minPetAge" ) }{ service.minPetAge }</h6>
                                     <h6>{ t( "serviceProviderView.maxPetAge" ) }{ service.maxPetAge }</h6>
-                                    <button className="btn btn-warning">{ t( "serviceProviderView.bookNow" ) }</button>
+                                    <button className="btn btn-warning" onClick={ () => { OrderCreate( service.id, provider )}}>{ t( "serviceProviderView.bookNow" ) }</button>
                                 </div>
                             );
                         })}
